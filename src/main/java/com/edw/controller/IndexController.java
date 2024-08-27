@@ -2,23 +2,30 @@ package com.edw.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashMap;
 
-@RestController
+@Controller
 public class IndexController {
     private Logger logger = LoggerFactory.getLogger(IndexController.class);
 
-    @GetMapping("/")
-    public HashMap index() {
+    @GetMapping("/api/data")
+    public HashMap<String, Object> getData() {
         logger.debug("request served");
 
-        return new HashMap<>() {{
-            put("success", true);
-            put("hello", "world");
-            put("new-message", "adding a new msg");
-        }};
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("hello", "world");
+        response.put("new-message", "adding a new msg");
+
+        return response;
+    }
+
+    @RequestMapping("/")
+    public String index() {
+        return "index"; // This will serve the Thymeleaf template named index.html
     }
 }
